@@ -1,0 +1,61 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 75-sshd-medium-hardening
+  labels:
+    machineconfiguration.openshift.io/role: master
+spec:
+  config:
+    ignition:
+      version: 3.4.0
+    storage:
+      files:
+        - path: /etc/ssh/sshd_config.d/75-medium-hardening.conf
+          mode: 0600
+          overwrite: true
+          contents:
+            # MEDIUM Severity SSHD Hardening (E8 Compliance Operator)
+            #
+            # Remediates the following compliance checks:
+            # - rhcos4-e8-worker-sshd-disable-root-login
+            # - rhcos4-e8-worker-sshd-disable-gssapi-auth
+            # - rhcos4-e8-worker-sshd-disable-rhosts
+            # - rhcos4-e8-worker-sshd-disable-user-known-hosts
+            # - rhcos4-e8-worker-sshd-do-not-permit-user-env
+            # - rhcos4-e8-worker-sshd-enable-strictmodes
+            # - rhcos4-e8-worker-sshd-print-last-log
+            #
+            # Documentation: https://sebrandon1.github.io/compliance-scripts/versions/4.21/groups/M1.html
+            #
+            source: data:text/plain,PermitRootLogin%20no%0AGSSAPIAuthentication%20no%0AIgnoreRhosts%20yes%0AIgnoreUserKnownHosts%20yes%0APermitUserEnvironment%20no%0AStrictModes%20yes%0APrintLastLog%20yes%0A
+---
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 75-sshd-medium-hardening
+  labels:
+    machineconfiguration.openshift.io/role: worker
+spec:
+  config:
+    ignition:
+      version: 3.4.0
+    storage:
+      files:
+        - path: /etc/ssh/sshd_config.d/75-medium-hardening.conf
+          mode: 0600
+          overwrite: true
+          contents:
+            # MEDIUM Severity SSHD Hardening (E8 Compliance Operator)
+            #
+            # Remediates the following compliance checks:
+            # - rhcos4-e8-worker-sshd-disable-root-login
+            # - rhcos4-e8-worker-sshd-disable-gssapi-auth
+            # - rhcos4-e8-worker-sshd-disable-rhosts
+            # - rhcos4-e8-worker-sshd-disable-user-known-hosts
+            # - rhcos4-e8-worker-sshd-do-not-permit-user-env
+            # - rhcos4-e8-worker-sshd-enable-strictmodes
+            # - rhcos4-e8-worker-sshd-print-last-log
+            #
+            # Documentation: https://sebrandon1.github.io/compliance-scripts/versions/4.21/groups/M1.html
+            #
+            source: data:text/plain,PermitRootLogin%20no%0AGSSAPIAuthentication%20no%0AIgnoreRhosts%20yes%0AIgnoreUserKnownHosts%20yes%0APermitUserEnvironment%20no%0AStrictModes%20yes%0APrintLastLog%20yes%0A
