@@ -1,0 +1,35 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 75-sysctl-dmesg-restrict
+  labels:
+    machineconfiguration.openshift.io/role: master
+spec:
+  config:
+    ignition:
+      version: 3.4.0
+    storage:
+      files:
+        - path: /etc/sysctl.d/75-dmesg-restrict.conf
+          mode: 0644
+          overwrite: true
+          contents:
+            source: data:text/plain,%23%20L2%3A%20Sysctl%20dmesg_restrict%20%28E8%20Compliance%29%0A%23%20Documentation%3A%20https%3A%2F%2Fsebrandon1.github.io%2Fcompliance-scripts%2Fversions%2F4.21%2Fgroups%2FL2.html%0A%0A%23%20Restrict%20dmesg%20access%20to%20root%0Akernel.dmesg_restrict%20%3D%201%0A
+---
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 75-sysctl-dmesg-restrict
+  labels:
+    machineconfiguration.openshift.io/role: worker
+spec:
+  config:
+    ignition:
+      version: 3.4.0
+    storage:
+      files:
+        - path: /etc/sysctl.d/75-dmesg-restrict.conf
+          mode: 0644
+          overwrite: true
+          contents:
+            source: data:text/plain,%23%20L2%3A%20Sysctl%20dmesg_restrict%20%28E8%20Compliance%29%0A%23%20Documentation%3A%20https%3A%2F%2Fsebrandon1.github.io%2Fcompliance-scripts%2Fversions%2F4.21%2Fgroups%2FL2.html%0A%0A%23%20Restrict%20dmesg%20access%20to%20root%0Akernel.dmesg_restrict%20%3D%201%0A
