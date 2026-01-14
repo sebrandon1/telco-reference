@@ -1,0 +1,13 @@
+# M10: API Server Encryption (E8/CIS Compliance)
+# Documentation: https://sebrandon1.github.io/compliance-scripts/versions/4.21/groups/M10.html
+#
+# This patch enables AES-CBC encryption at rest for etcd data.
+# Apply with: oc patch apiserver cluster --type merge -p '{"spec":{"encryption":{"type":"aescbc"}}}'
+#
+apiVersion: config.openshift.io/v1
+kind: APIServer
+metadata:
+  name: cluster
+spec:
+  encryption:
+    type: aescbc
