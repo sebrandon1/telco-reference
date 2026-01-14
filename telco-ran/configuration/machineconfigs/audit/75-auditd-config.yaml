@@ -1,0 +1,35 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 75-auditd-config
+  labels:
+    machineconfiguration.openshift.io/role: master
+spec:
+  config:
+    ignition:
+      version: 3.4.0
+    storage:
+      files:
+        - path: /etc/audit/auditd.conf
+          mode: 0640
+          overwrite: true
+          contents:
+            source: data:text/plain,%23%20M9%3A%20Auditd%20Configuration%20%28E8%20Compliance%29%0A%23%20Documentation%3A%20https%3A%2F%2Fsebrandon1.github.io%2Fcompliance-scripts%2Fversions%2F4.21%2Fgroups%2FM9.html%0A%0Alog_file%20%3D%20%2Fvar%2Flog%2Faudit%2Faudit.log%0Alog_format%20%3D%20ENRICHED%0Alog_group%20%3D%20root%0Apriority_boost%20%3D%204%0Aflush%20%3D%20INCREMENTAL_ASYNC%0Afreq%20%3D%2050%0Amax_log_file%20%3D%208%0Anum_logs%20%3D%205%0Aname_format%20%3D%20hostname%0Amax_log_file_action%20%3D%20ROTATE%0Aspace_left%20%3D%2075%0Aspace_left_action%20%3D%20SYSLOG%0Aadmin_space_left%20%3D%2050%0Aadmin_space_left_action%20%3D%20SUSPEND%0Adisk_full_action%20%3D%20SUSPEND%0Adisk_error_action%20%3D%20SUSPEND%0A
+---
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 75-auditd-config
+  labels:
+    machineconfiguration.openshift.io/role: worker
+spec:
+  config:
+    ignition:
+      version: 3.4.0
+    storage:
+      files:
+        - path: /etc/audit/auditd.conf
+          mode: 0640
+          overwrite: true
+          contents:
+            source: data:text/plain,%23%20M9%3A%20Auditd%20Configuration%20%28E8%20Compliance%29%0A%23%20Documentation%3A%20https%3A%2F%2Fsebrandon1.github.io%2Fcompliance-scripts%2Fversions%2F4.21%2Fgroups%2FM9.html%0A%0Alog_file%20%3D%20%2Fvar%2Flog%2Faudit%2Faudit.log%0Alog_format%20%3D%20ENRICHED%0Alog_group%20%3D%20root%0Apriority_boost%20%3D%204%0Aflush%20%3D%20INCREMENTAL_ASYNC%0Afreq%20%3D%2050%0Amax_log_file%20%3D%208%0Anum_logs%20%3D%205%0Aname_format%20%3D%20hostname%0Amax_log_file_action%20%3D%20ROTATE%0Aspace_left%20%3D%2075%0Aspace_left_action%20%3D%20SYSLOG%0Aadmin_space_left%20%3D%2050%0Aadmin_space_left_action%20%3D%20SUSPEND%0Adisk_full_action%20%3D%20SUSPEND%0Adisk_error_action%20%3D%20SUSPEND%0A
