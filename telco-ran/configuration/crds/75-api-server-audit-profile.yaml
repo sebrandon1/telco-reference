@@ -1,0 +1,13 @@
+# M12: Audit Profile (CIS Compliance)
+# Documentation: https://sebrandon1.github.io/compliance-scripts/versions/4.21/groups/M12.html
+#
+# This configures enhanced audit logging with request bodies.
+# Apply with: oc patch apiserver cluster --type merge -p '{"spec":{"audit":{"profile":"WriteRequestBodies"}}}'
+#
+apiVersion: config.openshift.io/v1
+kind: APIServer
+metadata:
+  name: cluster
+spec:
+  audit:
+    profile: WriteRequestBodies
