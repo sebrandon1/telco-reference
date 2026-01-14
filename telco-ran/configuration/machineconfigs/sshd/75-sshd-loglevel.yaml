@@ -1,0 +1,35 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 75-sshd-loglevel
+  labels:
+    machineconfiguration.openshift.io/role: master
+spec:
+  config:
+    ignition:
+      version: 3.4.0
+    storage:
+      files:
+        - path: /etc/ssh/sshd_config.d/75-loglevel.conf
+          mode: 0600
+          overwrite: true
+          contents:
+            source: data:text/plain,%23%20L1%3A%20SSHD%20LogLevel%20%28E8%20Compliance%29%0A%23%20Documentation%3A%20https%3A%2F%2Fsebrandon1.github.io%2Fcompliance-scripts%2Fversions%2F4.21%2Fgroups%2FL1.html%0A%0ALogLevel%20INFO%0A
+---
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 75-sshd-loglevel
+  labels:
+    machineconfiguration.openshift.io/role: worker
+spec:
+  config:
+    ignition:
+      version: 3.4.0
+    storage:
+      files:
+        - path: /etc/ssh/sshd_config.d/75-loglevel.conf
+          mode: 0600
+          overwrite: true
+          contents:
+            source: data:text/plain,%23%20L1%3A%20SSHD%20LogLevel%20%28E8%20Compliance%29%0A%23%20Documentation%3A%20https%3A%2F%2Fsebrandon1.github.io%2Fcompliance-scripts%2Fversions%2F4.21%2Fgroups%2FL1.html%0A%0ALogLevel%20INFO%0A
