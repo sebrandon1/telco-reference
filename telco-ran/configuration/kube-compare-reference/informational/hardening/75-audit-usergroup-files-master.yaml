@@ -1,0 +1,37 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 75-audit-usergroup-files-master
+  labels:
+    machineconfiguration.openshift.io/role: master
+spec:
+  config:
+    ignition:
+      version: 3.5.0
+    storage:
+      files:
+      - path: /etc/audit/rules.d/75-audit_rules_usergroup_modification_group.rules
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,-w%20/etc/group%20-p%20wa%20-k%20audit_rules_usergroup_modification%0A"
+      - path: /etc/audit/rules.d/75-audit_rules_usergroup_modification_gshadow.rules
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,-w%20/etc/gshadow%20-p%20wa%20-k%20audit_rules_usergroup_modification%0A"
+      - path: /etc/audit/rules.d/75-audit_rules_usergroup_modification_opasswd.rules
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,-w%20/etc/security/opasswd%20-p%20wa%20-k%20audit_rules_usergroup_modification%0A"
+      - path: /etc/audit/rules.d/75-audit_rules_usergroup_modification_passwd.rules
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,-w%20/etc/passwd%20-p%20wa%20-k%20audit_rules_usergroup_modification%0A"
+      - path: /etc/audit/rules.d/75-audit_rules_usergroup_modification_shadow.rules
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,-w%20/etc/shadow%20-p%20wa%20-k%20audit_rules_usergroup_modification%0A"
