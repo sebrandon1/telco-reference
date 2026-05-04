@@ -1,0 +1,37 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 75-audit-time-changes-worker
+  labels:
+    machineconfiguration.openshift.io/role: worker
+spec:
+  config:
+    ignition:
+      version: 3.5.0
+    storage:
+      files:
+      - path: /etc/audit/rules.d/75-audit_rules_time_watch_localtime.rules
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,-w%20/etc/localtime%20-p%20wa%20-k%20audit_time_rules%0A"
+      - path: /etc/audit/rules.d/75-syscall-adjtimex.rules
+        mode: 384
+        overwrite: true
+        contents:
+          source: "data:,-a%20always%2Cexit%20-F%20arch=b64%20-S%20adjtimex%20-k%20audit_time_rules%0A-a%20always%2Cexit%20-F%20arch=b32%20-S%20adjtimex%20-k%20audit_time_rules%0A"
+      - path: /etc/audit/rules.d/75-syscall-clock-settime.rules
+        mode: 384
+        overwrite: true
+        contents:
+          source: "data:,-a%20always%2Cexit%20-F%20arch=b64%20-S%20clock_settime%20-F%20a0=0x0%20-k%20time-change%0A-a%20always%2Cexit%20-F%20arch=b32%20-S%20clock_settime%20-F%20a0=0x0%20-k%20time-change%0A"
+      - path: /etc/audit/rules.d/75-syscall-settimeofday.rules
+        mode: 384
+        overwrite: true
+        contents:
+          source: "data:,-a%20always%2Cexit%20-F%20arch=b64%20-S%20settimeofday%20-k%20audit_time_rules%0A-a%20always%2Cexit%20-F%20arch=b32%20-S%20settimeofday%20-k%20audit_time_rules%0A"
+      - path: /etc/audit/rules.d/75-syscall-stime.rules
+        mode: 384
+        overwrite: true
+        contents:
+          source: "data:,-a%20always%2Cexit%20-F%20arch=b64%20-S%20stime%20-k%20audit_time_rules%0A-a%20always%2Cexit%20-F%20arch=b32%20-S%20stime%20-k%20audit_time_rules%0A"
