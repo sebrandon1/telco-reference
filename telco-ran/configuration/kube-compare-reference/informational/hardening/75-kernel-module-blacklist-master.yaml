@@ -1,0 +1,102 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 75-kernel-module-blacklist-master
+  labels:
+    machineconfiguration.openshift.io/role: master
+spec:
+  config:
+    ignition:
+      version: 3.5.0
+    storage:
+      files:
+      - path: /etc/modprobe.d/atm.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,install%20atm%20/bin/false%0Ablacklist%20atm%0A"
+      - path: /etc/modprobe.d/bluetooth.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,install%20bluetooth%20/bin/false%0Ablacklist%20bluetooth%0A"
+      - path: /etc/modprobe.d/can.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,install%20can%20/bin/false%0Ablacklist%20can%0A"
+      - path: /etc/modprobe.d/cfg80211.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,install%20cfg80211%20/bin/false%0Ablacklist%20cfg80211%0A"
+      - path: /etc/modprobe.d/cramfs.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,install%20cramfs%20/bin/false%0Ablacklist%20cramfs%0A"
+      - path: /etc/modprobe.d/firewire-core.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,install%20firewire-core%20/bin/false%0Ablacklist%20firewire-core%0A"
+      - path: /etc/modprobe.d/freevxfs.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,install%20freevxfs%20/bin/false%0Ablacklist%20freevxfs%0A"
+      - path: /etc/modprobe.d/hfs.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,install%20hfs%20/bin/false%0Ablacklist%20hfs%0A"
+      - path: /etc/modprobe.d/hfsplus.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,install%20hfsplus%20/bin/false%0Ablacklist%20hfsplus%0A"
+      - path: /etc/modprobe.d/iwlmvm.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,install%20iwlmvm%20/bin/false%0Ablacklist%20iwlmvm%0A"
+      - path: /etc/modprobe.d/iwlwifi.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,install%20iwlwifi%20/bin/false%0Ablacklist%20iwlwifi%0A"
+      - path: /etc/modprobe.d/jffs2.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,install%20jffs2%20/bin/false%0Ablacklist%20jffs2%0A"
+      - path: /etc/modprobe.d/mac80211.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,install%20mac80211%20/bin/false%0Ablacklist%20mac80211%0A"
+      - path: /etc/modprobe.d/sctp.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,install%20sctp%20/bin/false%0Ablacklist%20sctp%0A"
+      - path: /etc/modprobe.d/squashfs.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,install%20squashfs%20/bin/false%0Ablacklist%20squashfs%0A"
+      - path: /etc/modprobe.d/tipc.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,install%20tipc%20/bin/false%0Ablacklist%20tipc%0A"
+      - path: /etc/modprobe.d/udf.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,install%20udf%20/bin/false%0Ablacklist%20udf%0A"
+      - path: /etc/modprobe.d/usb-storage.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,install%20usb-storage%20/bin/false%0Ablacklist%20usb-storage%0A"
