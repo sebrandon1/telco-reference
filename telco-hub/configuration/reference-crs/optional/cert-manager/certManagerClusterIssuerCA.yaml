@@ -1,0 +1,15 @@
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: ca-issuer
+  annotations:
+    argocd.argoproj.io/sync-wave: "-30"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  ca:
+    # References a Secret in the cert-manager namespace containing tls.crt and tls.key
+    # for your internal CA. Create this Secret before applying the ClusterIssuer.
+    # To bootstrap a self-signed root CA, apply certManagerRootCACertificate.yaml first,
+    # which creates the root-ca-secret automatically.
+    secretName: root-ca-secret

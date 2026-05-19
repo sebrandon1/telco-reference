@@ -1,0 +1,26 @@
+---
+# Bootstrap a self-signed root CA for the ca-issuer ClusterIssuer.
+# This creates a root-ca-secret in the cert-manager namespace.
+# Apply certManagerClusterIssuerSelfSigned.yaml first to provide the
+# selfsigned-issuer needed to sign this root CA certificate.
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: root-ca
+  namespace: cert-manager
+  annotations:
+    argocd.argoproj.io/sync-wave: "-29"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  isCA: true
+  commonName: root-ca
+  secretName: root-ca-secret
+  duration: 87600h # 10 years
+  renewBefore: 720h # 30 days
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  issuerRef:
+    name: selfsigned-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io

@@ -40,6 +40,9 @@ storage-lso/StorageOperatorStatus.yaml
 cert-manager/apiServerCertificate.yaml
 cert-manager/apiServerConfig.yaml
 cert-manager/certManagerClusterIssuer.yaml
+cert-manager/certManagerClusterIssuerCA.yaml
+cert-manager/certManagerClusterIssuerSelfSigned.yaml
+cert-manager/certManagerRootCACertificate.yaml
 cert-manager/ingressCertificate.yaml
 cert-manager/ingressControllerConfig.yaml
 

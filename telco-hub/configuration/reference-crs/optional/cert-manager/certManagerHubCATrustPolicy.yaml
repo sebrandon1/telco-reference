@@ -1,0 +1,42 @@
+---
+# ACM Policy to distribute the hub cluster's custom CA certificate to
+# managed spoke clusters. This enables spokes to trust the hub's API
+# server and ingress certificates when the hub uses cert-manager with
+# a self-signed or internal CA.
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: hub-ca-trust-distribution
+  namespace: default
+  annotations:
+    policy.open-cluster-management.io/categories: SC System and Communications Protection
+    policy.open-cluster-management.io/controls: SC-8 Transmission Confidentiality and Integrity
+    policy.open-cluster-management.io/standards: NIST 800-53
+    argocd.argoproj.io/sync-wave: "-10"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  disabled: false
+  policy-templates:
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: hub-ca-trust-cp
+        spec:
+          remediationAction: enforce
+          severity: high
+          object-templates-raw: |
+            {{- $hubCA := (lookup "v1" "Secret" "cert-manager" "root-ca-secret") }}
+            {{- if $hubCA }}
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: v1
+                kind: ConfigMap
+                metadata:
+                  name: hub-ca-bundle
+                  namespace: openshift-config
+                data:
+                  ca-bundle.crt: |
+                    {{ index $hubCA.data "ca.crt" | base64dec | autoindent }}
+            {{- end }}
+  remediationAction: enforce

@@ -1,0 +1,22 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ .metadata.name | default "root-ca" }}
+  namespace: {{ .metadata.namespace | default "cert-manager" }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-29"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  isCA: true
+  commonName: {{ .spec.commonName | default "root-ca" }}
+  secretName: {{ .spec.secretName | default "root-ca-secret" }}
+  duration: {{ .spec.duration | default "87600h" }}
+  renewBefore: {{ .spec.renewBefore | default "720h" }}
+  privateKey:
+    algorithm: {{ .spec.privateKey.algorithm | default "ECDSA" }}
+    size: {{ .spec.privateKey.size | default 256 }}
+  issuerRef:
+    name: {{ .spec.issuerRef.name | default "selfsigned-issuer" }}
+    kind: {{ .spec.issuerRef.kind | default "ClusterIssuer" }}
+    group: {{ .spec.issuerRef.group | default "cert-manager.io" }}

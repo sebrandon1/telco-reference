@@ -1,0 +1,22 @@
+---
+# ConfigMap containing custom CA certificates from spoke clusters.
+# Add the root CA PEM from each spoke cluster that uses cert-manager
+# with a self-signed or internal CA. This enables ACM on the hub to
+# trust spoke API server and ingress certificates.
+#
+# Populate ca-bundle.crt with concatenated PEM certificates from all
+# spoke clusters using custom CAs.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spoke-ca-bundle
+  namespace: open-cluster-management
+  annotations:
+    argocd.argoproj.io/sync-wave: "-20"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+data:
+  ca-bundle.crt: |
+    # Add spoke cluster root CA certificates here (PEM format).
+    # Example: extract from a spoke cluster with:
+    #   oc get secret root-ca-secret -n cert-manager \
+    #     -o jsonpath='{.data.ca\.crt}' | base64 -d

@@ -33,6 +33,19 @@ required/gitops/addPluginsPolicy.yaml
 # not include the full policy content due to policy templating.
 required/acm/observabilityRoutePolicy.yaml
 
+# cert-manager config CRs (user-specific, and policies with hub-side templating)
+optional/cert-manager/certManagerClusterIssuerCA.yaml
+optional/cert-manager/certManagerClusterIssuerSelfSigned.yaml
+optional/cert-manager/certManagerRootCACertificate.yaml
+optional/cert-manager/certManagerSpokeCATrustCM.yaml
+optional/cert-manager/certManagerHubCATrustPolicy.yaml
+optional/cert-manager/certManagerHubCATrustPolicyPlacement.yaml
+optional/cert-manager/certManagerHubCATrustPolicyPlacementBinding.yaml
+optional/cert-manager/certManagerRootCAExpirationPolicy.yaml
+optional/cert-manager/certManagerRootCAExpirationPolicyPlacement.yaml
+optional/cert-manager/certManagerRootCAExpirationPolicyPlacementBinding.yaml
+optional/cert-manager/kustomization.yaml
+
 required/gitops/extra-manifests-policy.yaml
 # ArgoCD files
 kustomization.yaml

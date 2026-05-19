@@ -6,6 +6,11 @@ resources:
   - certManagerOperatorgroup.yaml
   - certManagerSubscription.yaml
   - certManagerClusterIssuer.yaml
+  # Alternative issuers for disconnected environments (comment out ACME issuer above and enable the matching set):
+  # Self-signed bootstrap set (uncomment all three):
+  # - certManagerClusterIssuerSelfSigned.yaml
+  # - certManagerRootCACertificate.yaml
+  # - certManagerClusterIssuerCA.yaml
   - ingressCertificate.yaml
   - ingressControllerConfig.yaml
   - apiServerCertificate.yaml
@@ -13,3 +18,12 @@ resources:
   - certManagerCertificatePolicy.yaml
   - certManagerCertificatePolicyPlacement.yaml
   - certManagerCertificatePolicyPlacementBinding.yaml
+  # Hub-Spoke CA trust (uncomment when using custom CAs):
+  # - certManagerSpokeCATrustCM.yaml
+  # - certManagerHubCATrustPolicy.yaml
+  # - certManagerHubCATrustPolicyPlacement.yaml
+  # - certManagerHubCATrustPolicyPlacementBinding.yaml
+  # Root CA expiration monitoring (uncomment when using custom CAs):
+  # - certManagerRootCAExpirationPolicy.yaml
+  # - certManagerRootCAExpirationPolicyPlacement.yaml
+  # - certManagerRootCAExpirationPolicyPlacementBinding.yaml
