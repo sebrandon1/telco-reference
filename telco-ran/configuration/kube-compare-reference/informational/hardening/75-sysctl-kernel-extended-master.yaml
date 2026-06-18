@@ -1,0 +1,27 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 75-sysctl-kernel-extended-master
+  labels:
+    machineconfiguration.openshift.io/role: master
+spec:
+  config:
+    ignition:
+      version: 3.5.0
+    storage:
+      files:
+      - path: /etc/sysctl.d/75-sysctl_kernel_core_pattern.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,kernel.core_pattern%20%3D%20%7C/bin/false%0A"
+      - path: /etc/sysctl.d/75-sysctl_kernel_kexec_load_disabled.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,kernel.kexec_load_disabled%3D1%0A"
+      - path: /etc/sysctl.d/75-sysctl_kernel_perf_event_paranoid.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,kernel.perf_event_paranoid%3D2%0A"
