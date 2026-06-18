@@ -1,0 +1,86 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 75-system-access-controls-master
+  labels:
+    machineconfiguration.openshift.io/role: master
+spec:
+  config:
+    ignition:
+      version: 3.5.0
+    storage:
+      files:
+      - contents:
+          # You are accessing a U.S. Government (USG) Information System (IS) that is
+          # provided for USG-authorized use only. By using this IS (which includes any
+          # device attached to this IS), you consent to the following conditions:
+          # -The USG routinely intercepts and monitors communications on this IS for
+          # purposes including, but not limited to, penetration testing, COMSEC monitoring,
+          # network operations and defense, personnel misconduct (PM), law enforcement
+          # (LE), and counterintelligence (CI) investigations.
+          # -At any time, the USG may inspect and seize data stored on this IS.
+          # -Communications using, or data stored on, this IS are not private, are subject
+          # to routine monitoring, interception, and search, and may be disclosed or used
+          # for any USG-authorized purpose.
+          # -This IS includes security measures (e.g., authentication and access controls)
+          # to protect USG interests--not for your personal benefit or privacy.
+          # -Notwithstanding the above, using this IS does not constitute consent to PM, LE
+          # or CI investigative searching or monitoring of the content of privileged
+          # communications, or work product, related to personal representation or services
+          # by attorneys, psychotherapists, or clergy, and their assistants. Such
+          # communications and work product are private and confidential. See User
+          # Agreement for details.
+          source: data:,You%20are%20accessing%20a%20U.S.%20Government%20%28USG%29%20Information%20System%20%28IS%29%20that%20is%20%0Aprovided%20for%20USG-authorized%20use%20only.%20By%20using%20this%20IS%20%28which%20includes%20any%20%0Adevice%20attached%20to%20this%20IS%29%2C%20you%20consent%20to%20the%20following%20conditions%3A%0A%0A-The%20USG%20routinely%20intercepts%20and%20monitors%20communications%20on%20this%20IS%20for%20%0Apurposes%20including%2C%20but%20not%20limited%20to%2C%20penetration%20testing%2C%20COMSEC%20monitoring%2C%20%0Anetwork%20operations%20and%20defense%2C%20personnel%20misconduct%20%28PM%29%2C%20law%20enforcement%20%0A%28LE%29%2C%20and%20counterintelligence%20%28CI%29%20investigations.%0A%0A-At%20any%20time%2C%20the%20USG%20may%20inspect%20and%20seize%20data%20stored%20on%20this%20IS.%0A%0A-Communications%20using%2C%20or%20data%20stored%20on%2C%20this%20IS%20are%20not%20private%2C%20are%20subject%20%0Ato%20routine%20monitoring%2C%20interception%2C%20and%20search%2C%20and%20may%20be%20disclosed%20or%20used%20%0Afor%20any%20USG-authorized%20purpose.%0A%0A-This%20IS%20includes%20security%20measures%20%28e.g.%2C%20authentication%20and%20access%20controls%29%20%0Ato%20protect%20USG%20interests--not%20for%20your%20personal%20benefit%20or%20privacy.%0A%0A-Notwithstanding%20the%20above%2C%20using%20this%20IS%20does%20not%20constitute%20consent%20to%20PM%2C%20LE%20%0Aor%20CI%20investigative%20searching%20or%20monitoring%20of%20the%20content%20of%20privileged%20%0Acommunications%2C%20or%20work%20product%2C%20related%20to%20personal%20representation%20or%20services%20%0Aby%20attorneys%2C%20psychotherapists%2C%20or%20clergy%2C%20and%20their%20assistants.%20Such%20%0Acommunications%20and%20work%20product%20are%20private%20and%20confidential.%20See%20User%20%0AAgreement%20for%20details.
+        mode: 420
+        overwrite: true
+        path: /etc/issue.d/legal-notice
+      - contents:
+          # daily
+          # rotate 30
+          # create
+          # dateext
+          # include /etc/logrotate.d
+          source: data:,%23%20see%20%22man%20logrotate%22%20for%20details%0A%23%20rotate%20log%20files%20daily%0Adaily%0A%0A%23%20keep%204%20weeks%20worth%20of%20backlogs%0Arotate%2030%0A%0A%23%20create%20new%20%28empty%29%20log%20files%20after%20rotating%20old%20ones%0Acreate%0A%0A%23%20use%20date%20as%20a%20suffix%20of%20the%20rotated%20file%0Adateext%0A%0A%23%20uncomment%20this%20if%20you%20want%20your%20log%20files%20compressed%0A%23compress%0A%0A%23%20RPM%20packages%20drop%20log%20rotation%20information%20into%20this%20directory%0Ainclude%20%2Fetc%2Flogrotate.d%0A%0A%23%20system-specific%20logs%20may%20be%20also%20be%20configured%20here.
+        mode: 420
+        overwrite: true
+        path: /etc/logrotate.conf
+      - contents:
+          # /bin/sh
+          # /bin/bash
+          # /usr/bin/sh
+          # /usr/bin/bash
+          source: data:,/bin/sh%0A/bin/bash%0A/usr/bin/sh%0A/usr/bin/bash%0A
+        mode: 420
+        overwrite: true
+        path: /etc/shells
+      - contents:
+          source: "data:,"
+        mode: 384
+        overwrite: true
+        path: /etc/securetty
+      - contents:
+          # Audit access to /var/log/audit directory
+          source: "data:,-a%20always%2Cexit%20-F%20arch%3Db32%20-F%20dir%3D%2Fvar%2Flog%2Faudit%2F%20-F%20perm%3Dr%20-F%20auid%3E%3D1000%20-F%20auid!%3Dunset%20-F%20key%3Daccess-audit-trail%0A-a%20always%2Cexit%20-F%20arch%3Db64%20-F%20dir%3D%2Fvar%2Flog%2Faudit%2F%20-F%20perm%3Dr%20-F%20auid%3E%3D1000%20-F%20auid!%3Dunset%20-F%20key%3Daccess-audit-trail%0A"
+        mode: 420
+        overwrite: true
+        path: /etc/audit/rules.d/75-access-audit-trail.rules
+    systemd:
+      units:
+      - enabled: false
+        mask: true
+        name: debug-shell.service
+      - enabled: false
+        mask: true
+        name: debug-shell.socket
+      - name: fix-var-log-audit-permissions.service
+        enabled: true
+        contents: |
+          [Unit]
+          Description=Fix /var/log/audit directory permissions
+          After=auditd.service
+          [Service]
+          Type=oneshot
+          RemainAfterExit=yes
+          ExecStart=/bin/chmod 0700 /var/log/audit
+          [Install]
+          WantedBy=multi-user.target
