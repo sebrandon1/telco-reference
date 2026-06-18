@@ -1,0 +1,22 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 75-usbguard-worker
+  labels:
+    machineconfiguration.openshift.io/role: worker
+spec:
+  config:
+    ignition:
+      version: 3.5.0
+    storage:
+      files:
+      - contents:
+          # allow with-interface match-all { 03:*:* 09:00:* }
+          source: data:,%0Aallow%20with-interface%20match-all%20%7B%2003:%2A:%2A%2009:00:%2A%20%7D
+        mode: 384
+        overwrite: true
+        path: /etc/usbguard/rules.d/75-hid-and-hub.conf
+    systemd:
+      units:
+      - enabled: true
+        name: usbguard.service
