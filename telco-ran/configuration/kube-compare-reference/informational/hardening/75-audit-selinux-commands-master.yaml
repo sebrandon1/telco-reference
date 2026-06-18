@@ -1,0 +1,42 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 75-audit-selinux-commands-master
+  labels:
+    machineconfiguration.openshift.io/role: master
+spec:
+  config:
+    ignition:
+      version: 3.5.0
+    storage:
+      files:
+      - path: /etc/audit/rules.d/75-usr_bin_chcon_execution.rules
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,-a%20always%2Cexit%20-F%20path%3D/usr/bin/chcon%20-F%20auid%3E%3D1000%20-F%20auid%21%3Dunset%20-F%20key%3Dprivileged%0A"
+      - path: /etc/audit/rules.d/75-usr_sbin_restorecon_execution.rules
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,-a%20always%2Cexit%20-F%20path%3D/usr/sbin/restorecon%20-F%20auid%3E%3D1000%20-F%20auid%21%3Dunset%20-F%20key%3Dprivileged%0A"
+      - path: /etc/audit/rules.d/75-usr_sbin_semanage_execution.rules
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,-a%20always%2Cexit%20-F%20path%3D/usr/sbin/semanage%20-F%20auid%3E%3D1000%20-F%20auid%21%3Dunset%20-F%20key%3Dprivileged%0A"
+      - path: /etc/audit/rules.d/75-usr_sbin_setfiles_execution.rules
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,-a%20always%2Cexit%20-F%20path%3D/usr/sbin/setfiles%20-F%20auid%3E%3D1000%20-F%20auid%21%3Dunset%20-F%20key%3Dprivileged%0A"
+      - path: /etc/audit/rules.d/75-usr_sbin_setsebool_execution.rules
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,-a%20always%2Cexit%20-F%20path%3D/usr/sbin/setsebool%20-F%20auid%3E%3D1000%20-F%20auid%21%3Dunset%20-F%20key%3Dprivileged%0A"
+      - path: /etc/audit/rules.d/75-usr_sbin_seunshare_execution.rules
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,-a%20always%2Cexit%20-F%20path%3D/usr/sbin/seunshare%20-F%20auid%3E%3D1000%20-F%20auid%21%3Dunset%20-F%20key%3Dprivileged%0A"
