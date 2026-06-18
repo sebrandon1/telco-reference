@@ -1,0 +1,112 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 75-sysctl-network-hardening-master
+  labels:
+    machineconfiguration.openshift.io/role: master
+spec:
+  config:
+    ignition:
+      version: 3.5.0
+    storage:
+      files:
+      - path: /etc/sysctl.d/75-sysctl_net_ipv4_conf_all_accept_redirects.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,net.ipv4.conf.all.accept_redirects%3D0%0A"
+      - path: /etc/sysctl.d/75-sysctl_net_ipv4_conf_all_accept_source_route.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,net.ipv4.conf.all.accept_source_route%3D0%0A"
+      - path: /etc/sysctl.d/75-sysctl_net_ipv4_conf_all_log_martians.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,net.ipv4.conf.all.log_martians%3D1%0A"
+      - path: /etc/sysctl.d/75-sysctl_net_ipv4_conf_all_rp_filter.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,net.ipv4.conf.all.rp_filter%3D1%0A"
+      - path: /etc/sysctl.d/75-sysctl_net_ipv4_conf_all_secure_redirects.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,net.ipv4.conf.all.secure_redirects%3D0%0A"
+      - path: /etc/sysctl.d/75-sysctl_net_ipv4_conf_all_send_redirects.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,net.ipv4.conf.all.send_redirects%3D0%0A"
+      - path: /etc/sysctl.d/75-sysctl_net_ipv4_conf_default_accept_redirects.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,net.ipv4.conf.default.accept_redirects%3D0%0A"
+      - path: /etc/sysctl.d/75-sysctl_net_ipv4_conf_default_log_martians.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,net.ipv4.conf.default.log_martians%3D1%0A"
+      - path: /etc/sysctl.d/75-sysctl_net_ipv4_conf_default_rp_filter.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,net.ipv4.conf.default.rp_filter%3D1%0A"
+      - path: /etc/sysctl.d/75-sysctl_net_ipv4_conf_default_secure_redirects.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,net.ipv4.conf.default.secure_redirects%3D0%0A"
+      - path: /etc/sysctl.d/75-sysctl_net_ipv4_conf_default_send_redirects.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,net.ipv4.conf.default.send_redirects%3D0%0A"
+      - path: /etc/sysctl.d/75-sysctl_net_ipv4_icmp_echo_ignore_broadcasts.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,net.ipv4.icmp_echo_ignore_broadcasts%3D1%0A"
+      - path: /etc/sysctl.d/75-sysctl_net_ipv4_icmp_ignore_bogus_error_responses.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,net.ipv4.icmp_ignore_bogus_error_responses%3D1%0A"
+      - path: /etc/sysctl.d/75-sysctl_net_ipv4_tcp_syncookies.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,net.ipv4.tcp_syncookies%3D1%0A"
+      - path: /etc/sysctl.d/75-sysctl_net_ipv6_conf_all_accept_ra.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,net.ipv6.conf.all.accept_ra%3D0%0A"
+      - path: /etc/sysctl.d/75-sysctl_net_ipv6_conf_all_accept_redirects.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,net.ipv6.conf.all.accept_redirects%3D0%0A"
+      - path: /etc/sysctl.d/75-sysctl_net_ipv6_conf_all_accept_source_route.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,net.ipv6.conf.all.accept_source_route%3D0%0A"
+      - path: /etc/sysctl.d/75-sysctl_net_ipv6_conf_default_accept_ra.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,net.ipv6.conf.default.accept_ra%3D0%0A"
+      - path: /etc/sysctl.d/75-sysctl_net_ipv6_conf_default_accept_redirects.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,net.ipv6.conf.default.accept_redirects%20%3D%200%0A"
+      - path: /etc/sysctl.d/75-sysctl_net_ipv6_conf_default_accept_source_route.conf
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,net.ipv6.conf.default.accept_source_route%3D0%0A"
