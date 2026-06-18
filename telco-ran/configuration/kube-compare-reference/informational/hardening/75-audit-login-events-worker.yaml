@@ -1,0 +1,37 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 75-audit-login-events-worker
+  labels:
+    machineconfiguration.openshift.io/role: worker
+spec:
+  config:
+    ignition:
+      version: 3.5.0
+    storage:
+      files:
+      - path: /etc/audit/rules.d/75-audit-sysadmin-actions.rules
+        mode: 384
+        overwrite: true
+        contents:
+          source: "data:,-w%20%2Fetc%2Fsudoers.d%2F%20-p%20wa%20-k%20actions%0A-w%20%2Fetc%2Fsudoers%20-p%20wa%20-k%20actions%0A"
+      - path: /etc/audit/rules.d/75-audit_rules_login_events_faillock.rules
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,-w%20%2Fvar%2Frun%2Ffaillock%20-p%20wa%20-k%20logins%0A"
+      - path: /etc/audit/rules.d/75-audit_rules_login_events_lastlog.rules
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,-w%20/var/log/lastlog%20-p%20wa%20-k%20logins%0A"
+      - path: /etc/audit/rules.d/75-audit_rules_login_events_tallylog.rules
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,-w%20/var/log/tallylog%20-p%20wa%20-k%20logins%0A"
+      - path: /etc/audit/rules.d/75-audit_rules_usergroup_modification.rules
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,-w%20/etc/group%20-p%20wa%20-k%20audit_rules_usergroup_modification%0A-w%20/etc/passwd%20-p%20wa%20-k%20audit_rules_usergroup_modification%0A-w%20/etc/gshadow%20-p%20wa%20-k%20audit_rules_usergroup_modification%0A-w%20/etc/shadow%20-p%20wa%20-k%20audit_rules_usergroup_modification%0A-w%20/etc/security/opasswd%20-p%20wa%20-k%20audit_rules_usergroup_modification%0A"
