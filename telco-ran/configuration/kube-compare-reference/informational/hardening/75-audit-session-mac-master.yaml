@@ -1,0 +1,32 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 75-audit-session-mac-master
+  labels:
+    machineconfiguration.openshift.io/role: master
+spec:
+  config:
+    ignition:
+      version: 3.5.0
+    storage:
+      files:
+      - path: /etc/audit/rules.d/75-audit-session-events.rules
+        mode: 384
+        overwrite: true
+        contents:
+          source: "data:,%0A-w%20%2Fvar%2Frun%2Futmp%20-p%20wa%20-k%20session%0A-w%20%2Fvar%2Flog%2Fbtmp%20-p%20wa%20-k%20session%0A-w%20%2Fvar%2Flog%2Fwtmp%20-p%20wa%20-k%20session%0A"
+      - path: /etc/audit/rules.d/75-etcselinux-wa-MAC-policy.rules
+        mode: 384
+        overwrite: true
+        contents:
+          source: "data:,-w%20%2Fetc%2Fselinux%2F%20-p%20wa%20-k%20MAC-policy%0A"
+      - path: /etc/audit/rules.d/75-mount_dac_modification.rules
+        mode: 420
+        overwrite: true
+        contents:
+          source: "data:,-a%20always%2Cexit%20-F%20arch%3Db32%20-S%20mount%20-F%20auid%3E%3D1000%20-F%20auid%21%3Dunset%20-F%20key%3Dexport%0A-a%20always%2Cexit%20-F%20arch%3Db64%20-S%20mount%20-F%20auid%3E%3D1000%20-F%20auid%21%3Dunset%20-F%20key%3Dexport%0A"
+      - path: /etc/audit/rules.d/90-immutable.rules
+        mode: 384
+        overwrite: true
+        contents:
+          source: "data:,-e%202%0A"
