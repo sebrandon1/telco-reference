@@ -1,0 +1,17 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 75-coreos-kernel-args-master
+  labels:
+    machineconfiguration.openshift.io/role: master
+spec:
+  kernelArguments:
+    - audit=1
+    - audit_backlog_limit=8192
+    - nousb
+    - page_poison=1
+    - pti=on
+    - vsyscall=none
+  config:
+    ignition:
+      version: 3.5.0
