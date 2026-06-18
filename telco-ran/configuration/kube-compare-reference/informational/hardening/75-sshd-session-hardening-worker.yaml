@@ -1,0 +1,22 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 75-sshd-session-hardening-worker
+  labels:
+    machineconfiguration.openshift.io/role: worker
+spec:
+  config:
+    ignition:
+      version: 3.5.0
+    storage:
+      files:
+      - path: /etc/ssh/sshd_config.d/00-complianceascode-sshd_set_idle_timeout.conf
+        mode: 384
+        overwrite: true
+        contents:
+          source: "data:,ClientAliveInterval%20300"
+      - path: /etc/ssh/sshd_config.d/00-complianceascode-sshd_set_keepalive.conf
+        mode: 384
+        overwrite: true
+        contents:
+          source: "data:,ClientAliveCountMax%200"
